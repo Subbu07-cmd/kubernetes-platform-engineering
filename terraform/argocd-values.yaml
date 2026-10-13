@@ -1,0 +1,14 @@
+configs:
+  params:
+    server.insecure: false
+  cm:
+    timeout.reconciliation: 120s
+server:
+  replicas: 2
+repoServer:
+  replicas: 2
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true

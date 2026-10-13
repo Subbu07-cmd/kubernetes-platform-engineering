@@ -1,0 +1,6 @@
+apiVersion: v2
+name: microservice
+description: Golden-path chart shared by every service on the platform
+type: application
+version: 1.3.0
+appVersion: "1.0.0"

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payments-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Subbu07-cmd/kubernetes-platform-engineering.git
+    targetRevision: main
+    path: charts/microservice
+    helm:
+      releaseName: payments-api
+      valueFiles: [../../gitops/apps/payments-api/values.yaml]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: payments-api
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true]

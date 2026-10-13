@@ -1,0 +1,27 @@
+# Developers can manage workloads in their team namespace but not RBAC, secrets or quotas.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: orders-api
+rules:
+  - apiGroups: ["", "apps", "autoscaling", "batch"]
+    resources: [pods, pods/log, pods/portforward, services, configmaps, deployments, replicasets, statefulsets, jobs, cronjobs, horizontalpodautoscalers]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [""]
+    resources: [events]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer
+  namespace: orders-api
+subjects:
+  - kind: Group
+    name: orders-team          # mapped from IAM via EKS access entries
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io

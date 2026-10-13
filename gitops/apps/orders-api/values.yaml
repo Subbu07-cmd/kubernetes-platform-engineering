@@ -1,0 +1,10 @@
+image:
+  repository: 123456789012.dkr.ecr.us-east-1.amazonaws.com/orders-api
+  tag: "1.8.3"
+env:
+  LOG_LEVEL: info
+autoscaling:
+  minReplicas: 3
+  maxReplicas: 12
+networkPolicy:
+  allowFromNamespaces: [ingress-nginx]

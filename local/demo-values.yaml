@@ -1,0 +1,12 @@
+# Runs the golden-path chart on kind with a public, non-root image.
+image:
+  repository: nginxinc/nginx-unprivileged
+  tag: "1.27-alpine"
+containerPort: 8080
+probes:
+  path: /
+autoscaling:
+  enabled: false
+replicaCount: 2
+networkPolicy:
+  enabled: false

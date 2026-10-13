@@ -1,0 +1,30 @@
+name: Validate
+on: [push, pull_request]
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: helm lint charts/microservice
+      - name: Render every app
+        run: |
+          for v in gitops/apps/*/values.yaml; do
+            helm template "$(basename $(dirname $v))" charts/microservice -f "$v" > /dev/null
+          done
+      - name: kubeconform
+        run: |
+          curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz | tar xz
+          for v in gitops/apps/*/values.yaml; do
+            helm template x charts/microservice -f "$v" | ./kubeconform -strict -ignore-missing-schemas -summary
+          done
+          ./kubeconform -strict -ignore-missing-schemas -summary rbac policies
+  terraform:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: terraform } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check
+      - run: terraform init -backend=false
+      - run: terraform validate
