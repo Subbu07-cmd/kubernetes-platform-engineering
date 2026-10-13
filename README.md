@@ -45,7 +45,7 @@ A blueprint for running enterprise microservices on **Amazon EKS** and moving wo
 
 ## Run it free on your laptop (kind)
 
-`./local/up.sh` creates a 3-node kind cluster, installs Argo CD and deploys the golden-path chart through GitOps. The drift, rollback and failure experiments are in [docs/gitops-lab.md](docs/gitops-lab.md).
+`bash local/up.sh` creates a 3-node kind cluster, installs Argo CD and deploys the golden-path chart through GitOps. The drift, rollback and failure experiments are in [docs/gitops-lab.md](docs/gitops-lab.md).
 
 ## Quick start (AWS / EKS)
 

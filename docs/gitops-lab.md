@@ -3,7 +3,7 @@
 Prerequisites: Docker, `kind`, `kubectl`.
 
 ```bash
-./local/up.sh
+bash local/up.sh
 kubectl get application demo-app -n argocd -w   # wait for Synced / Healthy
 kubectl get pods -n demo
 ```
